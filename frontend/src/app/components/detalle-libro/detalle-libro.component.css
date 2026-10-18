@@ -1,0 +1,7 @@
+
+.detalle { max-width: 560px; }
+.detalle h3 { margin-top: 0; font-size: 1.4rem; }
+.detalle dl { display: grid; grid-template-columns: 160px 1fr; gap: 10px 16px; margin: 0 0 20px; }
+.detalle dt { font-weight: 600; color: var(--texto-secundario); }
+.detalle dd { margin: 0; }
+.id { font-family: Consolas, monospace; font-weight: 600; }
