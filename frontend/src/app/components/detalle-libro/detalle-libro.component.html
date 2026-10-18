@@ -1,1 +1,40 @@
-<p>detalle-libro works!</p>
+<section class="encabezado-seccion">
+  <h2>Detalle del libro</h2>
+  <a routerLink="/" class="btn">← Volver</a>
+</section>
+
+@if (error()) {
+  <p class="alerta alerta-error">{{ error() }}</p>
+}
+
+@if (cargando()) {
+  <p class="texto-secundario">Cargando...</p>
+}
+
+@if (libro(); as libro) {
+  <div class="tarjeta detalle">
+    <h3>{{ libro.titulo }}</h3>
+
+    <dl>
+      <dt>ID</dt>
+      <dd class="id">{{ libro.id }}</dd>
+
+      <dt>Autor</dt>
+      <dd>{{ libro.autor }}</dd>
+
+      <dt>Género</dt>
+      <dd>{{ libro.genero ?? 'Sin especificar' }}</dd>
+
+      <dt>Año de publicación</dt>
+      <dd>{{ libro.anio_publicacion ?? 'Sin especificar' }}</dd>
+
+      <dt>Fecha de registro</dt>
+      <dd>{{ libro.created_at | date: 'dd/MM/yyyy HH:mm' }}</dd>
+    </dl>
+
+    <div class="botones">
+      <a [routerLink]="['/libros', libro.id, 'editar']" class="btn btn-primario">Editar</a>
+      <button type="button" class="btn btn-peligro" (click)="eliminar(libro)">Eliminar</button>
+    </div>
+  </div>
+}
