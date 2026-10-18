@@ -10,7 +10,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());   // permite recibir JSON en las peticiones
-app.use(morgan('dev'));    // registra cada petición en la consola (logs)
+// Registra cada petición en la consola (no durante las pruebas automáticas)
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan('dev'));
+}
 
 // Documentación de la API (Swagger)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapi, { customSiteTitle: 'API CRUD Librería' }));
