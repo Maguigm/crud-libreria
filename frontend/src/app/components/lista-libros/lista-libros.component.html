@@ -55,11 +55,13 @@
               <td>{{ libro.autor }}</td>
               <td>{{ libro.genero ?? '—' }}</td>
               <td>{{ libro.anio_publicacion ?? '—' }}</td>
-              <td class="acciones">
-                <a [routerLink]="['/libros', libro.id]" class="btn btn-chico">Ver</a>
-                <a [routerLink]="['/libros', libro.id, 'editar']" class="btn btn-chico">Editar</a>
-                <button type="button" class="btn btn-chico btn-peligro" (click)="eliminar(libro)">Eliminar</button>
-              </td>
+             <td>
+               <div class="acciones">
+                 <a [routerLink]="['/libros', libro.id]" class="btn btn-chico">Ver</a>
+                 <a [routerLink]="['/libros', libro.id, 'editar']" class="btn btn-chico">Editar</a>
+                 <button type="button" class="btn btn-chico btn-peligro" (click)="eliminar(libro)">Eliminar</button>
+               </div>
+            </td>
             </tr>
           }
         </tbody>
