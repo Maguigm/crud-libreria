@@ -1,0 +1,465 @@
+{
+  "info": {
+    "_postman_id": "5891053f-231c-4345-ae8f-fef4ecf78ecb",
+    "name": "CRUD libreria",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59033072",
+    "_collection_link": "https://go.postman.co/collection/59033072-5891053f-231c-4345-ae8f-fef4ecf78ecb?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01 - Estado de servidor y BD",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 200\", () => {\r\n  pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 - Listar libros",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 200\", () => {\r\n  pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/libros",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 - Buscar general",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 200\", () => {\r\n  pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/libros?q=soledad",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "soledad"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 - Buscar por autor",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 200\", () => {\r\n  pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/libros?q=rulfo&campo=autor",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "rulfo"
+            },
+            {
+              "key": "campo",
+              "value": "autor"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 - Buscar campo invalido",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 400\", () => {\r\n  pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"Indica que el campo de búsqueda es inválido\", () => {\r\n  pm.expect(pm.response.json().error).to.include(\"campo de búsqueda\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/libros?q=x&campo=precio",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "x"
+            },
+            {
+              "key": "campo",
+              "value": "precio"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 - Crear libro",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 201 Created\", () => {\r\n  pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"El ID tiene formato letra + 2 dígitos\", () => {\r\n  pm.expect(pm.response.json().id).to.match(/^[A-Z][0-9]{2}$/);\r\n});\r\n\r\npm.collectionVariables.set(\"libroId\", pm.response.json().id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"titulo\": \"Como agua para chocolate\",\r\n  \"autor\": \"Laura Esquivel\",\r\n  \"genero\": \"Novela\",\r\n  \"anio_publicacion\": 1989\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/libros",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 - Crear libro sin titulo",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 400\", () => {\r\n  pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"Indica que el título es obligatorio\", () => {\r\n  pm.expect(pm.response.json().error).to.include(\"título es obligatorio\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"autor\": \"Autor de prueba\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/libros",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "08 - Crear año invalido",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 400\", () => {\r\n  pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"Indica que el año es inválido\", () => {\r\n  pm.expect(pm.response.json().error).to.include(\"año de publicación\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"titulo\": \"Libro de prueba\",\r\n  \"autor\": \"Autor de prueba\",\r\n  \"anio_publicacion\": 3000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/libros",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "09 - Ver detalles del libro",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 200\", () => {\r\n  pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Devuelve el libro con el ID solicitado\", () => {\r\n  pm.expect(pm.response.json().id).to.eql(pm.collectionVariables.get(\"libroId\"));\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/libros/{{libroId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros",
+            "{{libroId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10 - Ver ID invalido",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 400\", () => {\r\n  pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"Indica que el formato del ID es inválido\", () => {\r\n  pm.expect(pm.response.json().error).to.include(\"formato\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/libros/abc",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros",
+            "abc"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11 - Editar libro",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 200\", () => {\r\n  pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"El ID no cambió\", () => {\r\n  pm.expect(pm.response.json().id).to.eql(pm.collectionVariables.get(\"libroId\"));\r\n});\r\n\r\npm.test(\"El título se actualizó\", () => {\r\n  pm.expect(pm.response.json().titulo).to.eql(\"Como agua para chocolate (Edición especial)\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"titulo\": \"Como agua para chocolate (Edición especial)\",\r\n  \"autor\": \"Laura Esquivel\",\r\n  \"genero\": \"Novela romántica\",\r\n  \"anio_publicacion\": 1989\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/libros/{{libroId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros",
+            "{{libroId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "12 - Eliminar libro",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 204 No Content\", () => {\r\n  pm.response.to.have.status(204);\r\n});\r\n\r\npm.test(\"La respuesta no tiene contenido\", () => {\r\n  pm.expect(pm.response.text()).to.eql(\"\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/libros/{{libroId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros",
+            "{{libroId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "13 - Ver libro eliminado",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Responde 404\", () => {\r\n  pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"Indica que el libro no existe\", () => {\r\n  pm.expect(pm.response.json().error).to.eql(\"Libro no encontrado\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/libros/{{libroId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "libros",
+            "{{libroId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "libroId",
+      "value": ""
+    }
+  ]
+}
