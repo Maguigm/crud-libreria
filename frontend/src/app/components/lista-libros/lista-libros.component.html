@@ -1,0 +1,38 @@
+<h2>Libros registrados</h2>
+
+@if (cargando()) {
+  <p>Cargando...</p>
+}
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+
+@if (!cargando() && !error()) {
+  @if (libros().length === 0) {
+    <p>No hay libros registrados.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Género</th>
+          <th>Año</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (libro of libros(); track libro.id) {
+          <tr>
+            <td>{{ libro.id }}</td>
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.genero ?? '—' }}</td>
+            <td>{{ libro.anio_publicacion ?? '—' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+}
