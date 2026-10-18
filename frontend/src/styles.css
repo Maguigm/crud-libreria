@@ -1,10 +1,10 @@
 :root {
-  --primario: #2f5d8a;
-  --primario-oscuro: #244a6e;
+  --primario: #34495e;
+  --primario-oscuro: #2c3e50;
   --peligro: #c0392b;
   --exito: #1e7e46;
-  --borde: #d9dee5;
-  --fondo: #f5f7fa;
+  --borde: #d9dee3;
+  --fondo: #f4f6f8;
   --texto: #1f2933;
   --texto-secundario: #616e7c;
 }
@@ -30,7 +30,7 @@ main.contenedor { padding-top: 24px; padding-bottom: 40px; }
 .barra { background: var(--primario); color: white; }
 .barra-contenido { display: flex; align-items: baseline; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
 .logo { color: white; text-decoration: none; font-size: 1.4rem; font-weight: 700; }
-.subtitulo { opacity: 0.85; font-size: 0.95rem; }
+
 
 /* Títulos de sección */
 .encabezado-seccion { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
@@ -86,3 +86,16 @@ input:focus, select:focus { outline: 2px solid var(--primario); outline-offset: 
 .alerta-error { background: #fbe9e7; color: var(--peligro); border: 1px solid #f2c4bd; }
 .texto-secundario { color: var(--texto-secundario); }
 .vacio { padding: 24px; text-align: center; background: white; border: 1px dashed var(--borde); border-radius: 8px; color: var(--texto-secundario); }
+
+
+/* Formulario */
+.tarjeta { background: white; border: 1px solid var(--borde); border-radius: 8px; padding: 24px; }
+.formulario { max-width: 560px; }
+.campo { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.campo label { font-weight: 600; font-size: 0.9rem; }
+.campo input { width: 100%; }
+input.invalido { border-color: var(--peligro); }
+input:disabled { background: #eef1f5; color: var(--texto-secundario); }
+.error-campo { color: var(--peligro); font-size: 0.85rem; }
+.ayuda { color: var(--texto-secundario); font-size: 0.85rem; margin: 0 0 16px; }
+.botones { display: flex; gap: 8px; margin-top: 8px; }
