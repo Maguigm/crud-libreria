@@ -1,38 +1,70 @@
-<h2>Libros registrados</h2>
+<section class="encabezado-seccion">
+  <h2>Libros registrados</h2>
+  <a routerLink="/libros/nuevo" class="btn btn-primario">+ Nuevo libro</a>
+</section>
+
+<form class="buscador" (ngSubmit)="buscar()">
+  <input type="text" name="texto" [(ngModel)]="texto" placeholder="Buscar por título, autor o género..." />
+  <select name="campo" [(ngModel)]="campo">
+    <option value="">Todos los campos</option>
+    <option value="titulo">Título</option>
+    <option value="autor">Autor</option>
+    <option value="genero">Género</option>
+  </select>
+  <button type="submit" class="btn btn-primario">Buscar</button>
+  @if (busquedaActiva()) {
+    <button type="button" class="btn" (click)="limpiar()">Limpiar</button>
+  }
+</form>
+
+@if (mensaje()) {
+  <p class="alerta alerta-exito">{{ mensaje() }}</p>
+}
+@if (error()) {
+  <p class="alerta alerta-error">{{ error() }}</p>
+}
+@if (errorCarga()) {
+  <p class="alerta alerta-error">{{ errorCarga() }}</p>
+}
 
 @if (cargando()) {
-  <p>Cargando...</p>
-}
-
-@if (error()) {
-  <p class="error">{{ error() }}</p>
-}
-
-@if (!cargando() && !error()) {
+  <p class="texto-secundario">Cargando...</p>
+} @else if (!errorCarga()) {
   @if (libros().length === 0) {
-    <p>No hay libros registrados.</p>
+    <p class="vacio">
+      {{ busquedaActiva() ? 'No se encontraron libros con esa búsqueda.' : 'No hay libros registrados.' }}
+    </p>
   } @else {
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Título</th>
-          <th>Autor</th>
-          <th>Género</th>
-          <th>Año</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (libro of libros(); track libro.id) {
+    <div class="tabla-contenedor">
+      <table class="tabla">
+        <thead>
           <tr>
-            <td>{{ libro.id }}</td>
-            <td>{{ libro.titulo }}</td>
-            <td>{{ libro.autor }}</td>
-            <td>{{ libro.genero ?? '—' }}</td>
-            <td>{{ libro.anio_publicacion ?? '—' }}</td>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>Año</th>
+            <th>Acciones</th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (libro of libros(); track libro.id) {
+            <tr>
+              <td class="id">{{ libro.id }}</td>
+              <td>{{ libro.titulo }}</td>
+              <td>{{ libro.autor }}</td>
+              <td>{{ libro.genero ?? '—' }}</td>
+              <td>{{ libro.anio_publicacion ?? '—' }}</td>
+              <td class="acciones">
+                <a [routerLink]="['/libros', libro.id]" class="btn btn-chico">Ver</a>
+                <a [routerLink]="['/libros', libro.id, 'editar']" class="btn btn-chico">Editar</a>
+                <button type="button" class="btn btn-chico btn-peligro" (click)="eliminar(libro)">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="texto-secundario">{{ libros().length }} libro(s)</p>
   }
 }

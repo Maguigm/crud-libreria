@@ -1,1 +1,88 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primario: #2f5d8a;
+  --primario-oscuro: #244a6e;
+  --peligro: #c0392b;
+  --exito: #1e7e46;
+  --borde: #d9dee5;
+  --fondo: #f5f7fa;
+  --texto: #1f2933;
+  --texto-secundario: #616e7c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+.contenedor {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+main.contenedor { padding-top: 24px; padding-bottom: 40px; }
+
+/* Barra superior */
+.barra { background: var(--primario); color: white; }
+.barra-contenido { display: flex; align-items: baseline; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+.logo { color: white; text-decoration: none; font-size: 1.4rem; font-weight: 700; }
+.subtitulo { opacity: 0.85; font-size: 0.95rem; }
+
+/* Títulos de sección */
+.encabezado-seccion { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.encabezado-seccion h2 { margin: 0; }
+
+/* Botones */
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: white;
+  color: var(--texto);
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:hover { background: #eef1f5; }
+.btn-primario { background: var(--primario); border-color: var(--primario); color: white; }
+.btn-primario:hover { background: var(--primario-oscuro); }
+.btn-peligro { color: var(--peligro); border-color: var(--peligro); }
+.btn-peligro:hover { background: var(--peligro); color: white; }
+.btn-chico { padding: 4px 10px; font-size: 0.85rem; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Buscador */
+.buscador { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.buscador input { flex: 1; min-width: 200px; }
+
+/* Campos de formulario */
+input, select {
+  padding: 8px 10px;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: white;
+}
+input:focus, select:focus { outline: 2px solid var(--primario); outline-offset: -1px; }
+
+/* Tabla */
+.tabla-contenedor { overflow-x: auto; background: white; border: 1px solid var(--borde); border-radius: 8px; }
+.tabla { width: 100%; border-collapse: collapse; }
+.tabla th, .tabla td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--borde); }
+.tabla th { background: #eef1f5; font-size: 0.85rem; text-transform: uppercase; color: var(--texto-secundario); }
+.tabla tr:last-child td { border-bottom: none; }
+.tabla .id { font-family: Consolas, monospace; font-weight: 600; }
+.acciones { white-space: nowrap; display: flex; gap: 6px; }
+
+/* Mensajes */
+.alerta { padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; }
+.alerta-exito { background: #e3f4ea; color: var(--exito); border: 1px solid #b7e1c7; }
+.alerta-error { background: #fbe9e7; color: var(--peligro); border: 1px solid #f2c4bd; }
+.texto-secundario { color: var(--texto-secundario); }
+.vacio { padding: 24px; text-align: center; background: white; border: 1px dashed var(--borde); border-radius: 8px; color: var(--texto-secundario); }
