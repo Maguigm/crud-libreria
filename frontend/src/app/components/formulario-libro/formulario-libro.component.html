@@ -1,1 +1,66 @@
-<p>formulario-libro works!</p>
+<section class="encabezado-seccion">
+  <h2>{{ esEdicion ? 'Editar libro' : 'Nuevo libro' }}</h2>
+  <a routerLink="/" class="btn">← Volver</a>
+</section>
+
+@if (error()) {
+  <p class="alerta alerta-error">{{ error() }}</p>
+}
+
+@if (cargando()) {
+  <p class="texto-secundario">Cargando...</p>
+} @else {
+  <form class="tarjeta formulario" [formGroup]="formulario" (ngSubmit)="guardar()" novalidate>
+
+    @if (esEdicion) {
+      <div class="campo">
+        <label for="id">ID</label>
+        <input id="id" type="text" [value]="idLibro()" disabled />
+        <small class="ayuda">El ID no se puede modificar.</small>
+      </div>
+    } @else {
+      <p class="ayuda">El ID se generará automáticamente al guardar.</p>
+    }
+
+    <div class="campo">
+      <label for="titulo">Título *</label>
+      <input id="titulo" type="text" formControlName="titulo" [class.invalido]="campoInvalido('titulo')" />
+      @if (campoInvalido('titulo')) {
+        <small class="error-campo">El título es obligatorio (máximo 200 caracteres).</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="autor">Autor *</label>
+      <input id="autor" type="text" formControlName="autor" [class.invalido]="campoInvalido('autor')" />
+      @if (campoInvalido('autor')) {
+        <small class="error-campo">El autor es obligatorio (máximo 150 caracteres).</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="genero">Género</label>
+      <input id="genero" type="text" formControlName="genero" [class.invalido]="campoInvalido('genero')" />
+      @if (campoInvalido('genero')) {
+        <small class="error-campo">Máximo 80 caracteres.</small>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="anio">Año de publicación</label>
+      <input id="anio" type="number" formControlName="anio_publicacion" [class.invalido]="campoInvalido('anio_publicacion')" />
+      @if (campoInvalido('anio_publicacion')) {
+        <small class="error-campo">Debe ser un año entre 1 y {{ anioActual }}.</small>
+      }
+    </div>
+
+    <p class="ayuda">* Campos obligatorios</p>
+
+    <div class="botones">
+      <button type="submit" class="btn btn-primario" [disabled]="guardando()">
+        {{ guardando() ? 'Guardando...' : 'Guardar' }}
+      </button>
+      <a routerLink="/" class="btn">Cancelar</a>
+    </div>
+  </form>
+}
