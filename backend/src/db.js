@@ -1,5 +1,10 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config({ quiet: true });
+const fs = require('fs');
+
+const ssl = process.env.DB_SSL_CA_PATH
+  ? { ca: fs.readFileSync(process.env.DB_SSL_CA_PATH) }
+  : undefined;
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -8,6 +13,7 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   waitForConnections: true,
+  ssl,
   connectionLimit: 10,
 });
 
