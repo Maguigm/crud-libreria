@@ -17,12 +17,12 @@ export class FormularioLibroComponent implements OnInit {
   private router = inject(Router);
 
   anioActual = new Date().getFullYear();
-  idLibro = signal<string | null>(null); // null = crear, con valor = editar
+  idLibro = signal<string | null>(null); 
   cargando = signal(false);
   guardando = signal(false);
   error = signal('');
 
-  // /\S/ evita que se acepten textos con puros espacios
+  
   formulario = this.fb.group({
     titulo: ['', [Validators.required, Validators.pattern(/\S/), Validators.maxLength(200)]],
     autor: ['', [Validators.required, Validators.pattern(/\S/), Validators.maxLength(150)]],
@@ -35,7 +35,7 @@ export class FormularioLibroComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Si la URL trae un id (/libros/A12/editar), es edición
+    
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.idLibro.set(id);
@@ -62,7 +62,7 @@ export class FormularioLibroComponent implements OnInit {
     });
   }
 
-  // Muestra el error solo si el usuario ya tocó el campo
+  
   campoInvalido(nombre: string): boolean {
     const campo = this.formulario.get(nombre);
     return !!campo && campo.invalid && (campo.touched || campo.dirty);
@@ -70,7 +70,7 @@ export class FormularioLibroComponent implements OnInit {
 
   guardar(): void {
     if (this.formulario.invalid) {
-      this.formulario.markAllAsTouched(); // muestra todos los errores
+      this.formulario.markAllAsTouched(); 
       return;
     }
 

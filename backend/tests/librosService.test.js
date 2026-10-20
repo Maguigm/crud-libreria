@@ -1,4 +1,4 @@
-// Pruebas unitarias del servicio. El repositorio se reemplaza por un "mock"
+// Pruebas unitarias del servicio
 // para probar la lógica sin conectarse a MySQL.
 jest.mock('../src/repositories/librosRepository');
 const repo = require('../src/repositories/librosRepository');

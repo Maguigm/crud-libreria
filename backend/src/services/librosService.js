@@ -1,11 +1,11 @@
 const repo = require('../repositories/librosRepository');
 const { generarId, esIdValido } = require('../utils/generadorId');
 
-const MAX_LIBROS = 26 * 100;   // 2,600 combinaciones posibles de ID
-const MAX_INTENTOS = 100;
+const MAX_LIBROS = 26 * 100;   //combinaciones posibles
+const MAX_INTENTOS = 100; //para el ciclo
 const CAMPOS_BUSQUEDA = ['titulo', 'autor', 'genero'];
 
-// Error con código HTTP (400, 404, 409...) para responder al cliente
+
 class ErrorNegocio extends Error {
   constructor(mensaje, status) {
     super(mensaje);
@@ -18,7 +18,7 @@ function textoLimpio(valor) {
   return typeof valor === 'string' ? valor.trim() : '';
 }
 
-// Valida y limpia los datos de un libro
+// validacion de datos libro
 function validarLibro(datos = {}) {
   const errores = [];
   const titulo = textoLimpio(datos.titulo);
@@ -82,17 +82,17 @@ async function crear(datos) {
   if ((await repo.contar()) >= MAX_LIBROS) {
     throw new ErrorNegocio('No hay IDs disponibles: se alcanzó el máximo de 2,600 libros', 409);
   }
-
+  //ciclo de intentos
   for (let intento = 1; intento <= MAX_INTENTOS; intento++) {
     const id = generarId();
-    if (await repo.existeId(id)) continue; // ID ocupado, se genera otro
+    if (await repo.existeId(id)) continue; 
 
     try {
       const creado = await repo.crear({ id, ...libro });
       console.log(`Libro ${id} creado (intento ${intento})`);
       return creado;
     } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') continue; // otra petición tomó el mismo ID
+      if (error.code === 'ER_DUP_ENTRY') continue; // en otra petición tomó el mismo id
       throw error;
     }
   }
