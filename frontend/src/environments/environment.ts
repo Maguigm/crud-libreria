@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'https://crud-libreria-api.onrender.com/api',
 };
