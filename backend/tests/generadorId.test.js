@@ -1,9 +1,9 @@
-// Pruebas unitarias del generador de ID (no usan base de datos)
+// Pruebas unitarias del generador de id
 const { generarId, esIdValido } = require('../src/utils/generadorId');
 
 describe('generarId', () => {
   afterEach(() => {
-    jest.restoreAllMocks(); // regresa Math.random a la normalidad
+    jest.restoreAllMocks(); 
   });
 
   test('genera un ID con formato letra + 2 dígitos', () => {

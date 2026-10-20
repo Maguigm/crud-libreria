@@ -3,9 +3,9 @@ const librosService = require('../services/librosService');
 
 const router = express.Router();
 
-// GET /api/libros            → lista todos
-// GET /api/libros?q=texto    → busca en título, autor y género
-// GET /api/libros?q=texto&campo=autor → busca solo en ese campo
+
+
+//enlistar todos los libro
 router.get('/', async (req, res, next) => {
   try {
     const libros = await librosService.listar(req.query.q, req.query.campo);
@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// GET /api/libros/:id → detalle de un libro
+//obtener por id
 router.get('/:id', async (req, res, next) => {
   try {
     const libro = await librosService.obtener(req.params.id);
@@ -25,7 +25,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// POST /api/libros → crea un libro (el ID se genera automáticamente)
+// crea libro 
 router.post('/', async (req, res, next) => {
   try {
     const libro = await librosService.crear(req.body);
@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// PUT /api/libros/:id → edita un libro (el ID no se puede cambiar)
+//edita libro
 router.put('/:id', async (req, res, next) => {
   try {
     const libro = await librosService.actualizar(req.params.id, req.body);
@@ -45,7 +45,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-// DELETE /api/libros/:id → elimina un libro
+//elimina libro
 router.delete('/:id', async (req, res, next) => {
   try {
     await librosService.eliminar(req.params.id);

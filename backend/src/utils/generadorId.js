@@ -1,14 +1,14 @@
 const LETRAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const PATRON_ID = /^[A-Z][0-9]{2}$/; // letra A-Z + 2 dígitos
+const PATRON_ID = /^[A-Z][0-9]{2}$/; // forma del id
 
-// Genera un ID aleatorio: letra A-Z + número 00-99 (ej. "B07")
+//para generar el id
 function generarId() {
   const letra = LETRAS[Math.floor(Math.random() * LETRAS.length)];
   const numero = String(Math.floor(Math.random() * 100)).padStart(2, '0');
   return letra + numero;
 }
 
-// Verifica que un ID tenga el formato correcto
+//verifica el formato
 function esIdValido(id) {
   return PATRON_ID.test(id);
 }
