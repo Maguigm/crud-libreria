@@ -20,12 +20,12 @@ export class ListaLibrosComponent implements OnInit {
   mensaje = signal('');
   busquedaActiva = signal(false);
 
-  // Campos del buscador
+  
   texto = '';
   campo = '';
 
   ngOnInit(): void {
-    // Mensaje enviado desde el formulario después de guardar
+    
     const mensaje = history.state?.mensaje;
     if (mensaje) this.mensaje.set(mensaje);
     this.cargar();

@@ -1,6 +1,6 @@
 const pool = require('../db');
 
-// Todas las consultas usan "?" (consultas parametrizadas) para evitar inyección SQL
+
 
 async function obtenerTodos() {
   const [rows] = await pool.query('SELECT * FROM libros ORDER BY titulo');
@@ -8,7 +8,7 @@ async function obtenerTodos() {
 }
 
 async function buscarEnCampo(campo, texto) {
-  // "campo" ya viene validado por el servicio (solo titulo, autor o genero)
+  
   const [rows] = await pool.query(
     `SELECT * FROM libros WHERE ${campo} LIKE ? ORDER BY titulo`,
     [`%${texto}%`]

@@ -1,25 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const swaggerUi = require('swagger-ui-express');      // Swagger
-const openapi = require('./docs/openapi');             // Swagger
+const swaggerUi = require('swagger-ui-express');      
+const openapi = require('./docs/openapi');             
 const pool = require('./db');
 const librosRoutes = require('./routes/libros.routes');
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());   // permite recibir JSON en las peticiones
-// Registra cada petición en la consola (no durante las pruebas automáticas)
+app.use(express.json());   
+
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// Documentación de la API (Swagger)
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapi, { customSiteTitle: 'API CRUD Librería' }));
 app.get('/api-docs.json', (req, res) => res.json(openapi));
 
-// Verifica que el servidor y la base de datos funcionan
+
 app.get('/api/health', async (req, res) => {
   try {
     await pool.query('SELECT 1');
@@ -30,15 +30,15 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// Rutas del CRUD
+
 app.use('/api/libros', librosRoutes);
 
-// Ruta no encontrada
+
 app.use((req, res) => {
   res.status(404).json({ error: 'Ruta no encontrada' });
 });
 
-// Manejo centralizado de errores
+
 app.use((err, req, res, next) => {
   if (err.type === 'entity.parse.failed') {
     return res.status(400).json({ error: 'El cuerpo de la petición no es un JSON válido' });

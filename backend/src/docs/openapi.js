@@ -1,4 +1,4 @@
-// Especificación OpenAPI 3.0 de la API de la librería
+
 const idParam = {
   name: 'id',
   in: 'path',
